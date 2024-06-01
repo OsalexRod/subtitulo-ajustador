@@ -8,7 +8,7 @@ patron_con_caracter_raro = r"^\uFEFF[0-9]+$"
 patron_solo_numeros = r"^[0-9]+$"
 
 # Nombre del archivo .srt
-nombre_archivo = "Kimi no na wa_2016_eric paroissien_JAPANESE_SUBS.srt"
+nombre_archivo = "S01E01.srt"
 
 # Abrir el archivo en modo lectura
 with open(nombre_archivo, "r", encoding="utf-8") as archivo:
@@ -45,10 +45,10 @@ for linea in lineas:
         print("Nuevo bloque guardado")
 
 print("Listo !!!")
-print(lista_de_bloques[1193])
+#print(lista_de_bloques[1193])
 
 # otras variables
-tiempo_a_quitar = 13 #segundos
+tiempo_a_mover = 2 #segundos
 formato = "%H:%M:%S,%f"
 
 for bloqueActual in lista_de_bloques:
@@ -58,14 +58,17 @@ for bloqueActual in lista_de_bloques:
     objeto_inicio = datetime.strptime(inicio, formato)
     objeto_fin = datetime.strptime(fin, formato)
 
-    tiempo_modificado_inicio = objeto_inicio - timedelta(seconds=tiempo_a_quitar)
-    tiempo_modificado_fin = objeto_fin - timedelta(seconds=tiempo_a_quitar)
-    bloqueActual
-
+    if tiempo_a_mover > 0:
+        tiempo_modificado_inicio = objeto_inicio + timedelta(seconds=tiempo_a_mover)
+        tiempo_modificado_fin = objeto_fin + timedelta(seconds=tiempo_a_mover)
+    else:
+        tiempo_modificado_inicio = objeto_inicio - timedelta(seconds=tiempo_a_mover)
+        tiempo_modificado_fin = objeto_fin - timedelta(seconds=tiempo_a_mover)
+    
     bloqueActual.inicio = str(tiempo_modificado_inicio.strftime(formato)[0:12])
     bloqueActual.fin = str(tiempo_modificado_fin.strftime(formato)[0:12])
 
-print(lista_de_bloques[1193])
+#print(lista_de_bloques[1193])
 
 archivo_salida= "salida.srt"
 
